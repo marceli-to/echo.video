@@ -15,7 +15,17 @@ export type IconName =
   | 'caret-down'
   | 'arrow-elbow-down-left'
   | 'x'
-  | 'paperclip';
+  | 'paperclip'
+  | 'gear-six'
+  | 'lock-simple'
+  | 'sparkle'
+  | 'phone'
+  | 'copy'
+  | 'folder-simple'
+  | 'minus-circle'
+  | 'caret-right'
+  | 'dots-three'
+  | 'file';
 
 export const Icon: React.FC<{ name: IconName; size: number; color?: string; style?: React.CSSProperties }> = ({
   name,

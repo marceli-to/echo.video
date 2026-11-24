@@ -3,7 +3,12 @@ import { C, WIN } from '../theme';
 import { TitleBar } from './parts';
 
 /** écho's main window content, 1392 × 832 pt: title bar, hairline, the screen, and overlays (⌘K). */
-export const Window: React.FC<{ children: React.ReactNode; overlay?: React.ReactNode }> = ({ children, overlay }) => (
+export const Window: React.FC<{
+  children: React.ReactNode;
+  overlay?: React.ReactNode;
+  screen?: 'recent' | 'people';
+  active?: boolean;
+}> = ({ children, overlay, screen, active }) => (
   <div
     style={{
       position: 'relative',
@@ -18,7 +23,7 @@ export const Window: React.FC<{ children: React.ReactNode; overlay?: React.React
       WebkitFontSmoothing: 'antialiased',
     }}
   >
-    <TitleBar />
+    <TitleBar screen={screen} active={active} />
     <div style={{ height: 1, background: C.line }} />
     {children}
     {overlay}

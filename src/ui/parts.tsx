@@ -76,10 +76,11 @@ export const PrimaryButton: React.FC<{ title: string }> = ({ title }) => (
 );
 
 /** A Recent row (FeedRowLayout): icon, mono label + time, title, one line of snippet. */
-export const FeedRow: React.FC<{ item: FeedItem; selected?: boolean; selectedAmount?: number }> = ({
+export const FeedRow: React.FC<{ item: FeedItem; selected?: boolean; selectedAmount?: number; attachment?: string }> = ({
   item,
   selected,
   selectedAmount,
+  attachment,
 }) => {
   const amount = selectedAmount ?? (selected ? 1 : 0);
   const time = <span style={{ ...mono(11), color: C.muted, flexShrink: 0 }}>{item.time}</span>;
@@ -131,6 +132,12 @@ export const FeedRow: React.FC<{ item: FeedItem; selected?: boolean; selectedAmo
             <Snippet text={item.snippet} size={13.5} />
           </div>
         ) : null}
+        {attachment ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: C.muted, paddingTop: 2 }}>
+            <Icon name="paperclip" size={13} />
+            <span style={{ ...manrope(12.5, 500), ...oneLine }}>{attachment}</span>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -179,12 +186,12 @@ const ViewTab: React.FC<{ title: string; keys: string; selected: boolean }> = ({
 );
 
 /** Title bar: traffic lights, "écho", Recent / People tabs, sync status. */
-export const TitleBar: React.FC = () => (
+export const TitleBar: React.FC<{ screen?: 'recent' | 'people'; active?: boolean }> = ({ screen = 'recent', active = true }) => (
   <div style={{ position: 'relative', height: WIN.titleBar, display: 'flex', alignItems: 'center', padding: '0 18px 0 100px' }}>
     <div style={{ position: 'absolute', left: 17, top: 17, display: 'flex', gap: 9 }}>
-      {['#FF5F57', '#FEBC2E', '#28C840'].map((c) => (
+      {(active ? ['#FF5F57', '#FEBC2E', '#28C840'] : ['#C9CBC6', '#C9CBC6', '#C9CBC6']).map((c, i) => (
         <div
-          key={c}
+          key={i}
           style={{ width: 14, height: 14, borderRadius: 7, background: c, boxShadow: 'inset 0 0 0 0.5px rgba(0,0,0,0.12)' }}
         />
       ))}
@@ -208,8 +215,8 @@ export const TitleBar: React.FC = () => (
         background: 'rgba(30, 38, 33, 0.07)',
       }}
     >
-      <ViewTab title="Recent" keys="⌘1" selected />
-      <ViewTab title="People" keys="⌘2" selected={false} />
+      <ViewTab title="Recent" keys="⌘1" selected={screen === 'recent'} />
+      <ViewTab title="People" keys="⌘2" selected={screen === 'people'} />
     </div>
   </div>
 );
