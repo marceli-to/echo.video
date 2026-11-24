@@ -81,7 +81,8 @@ const MetaRow: React.FC<{ k: string; v: string }> = ({ k, v }) => (
 );
 
 /** Recent: the feed with the done reminder selected, previewed on the right. */
-export const RecentScreen: React.FC<{ searchPressed?: number }> = ({ searchPressed }) => (
+/** Recent. `pinned`: an item opened from a link (echo://item/…) shows in the preview, no row selected. */
+export const RecentScreen: React.FC<{ searchPressed?: number; pinned?: React.ReactNode }> = ({ searchPressed, pinned }) => (
   <Split
     list={
       <>
@@ -93,7 +94,7 @@ export const RecentScreen: React.FC<{ searchPressed?: number }> = ({ searchPress
             <React.Fragment key={d.label}>
               <DayLabel label={d.label} />
               {d.items.map((item, i) => (
-                <FeedRow key={i} item={item} selected={di === 0 && i === 0} />
+                <FeedRow key={i} item={item} selected={!pinned && di === 0 && i === 0} />
               ))}
             </React.Fragment>
           ))}
@@ -101,7 +102,7 @@ export const RecentScreen: React.FC<{ searchPressed?: number }> = ({ searchPress
       </>
     }
     preview={
-      <>
+      pinned ?? <>
         <div style={{ flex: 1, padding: '26px 36px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           <PreviewHead icon="list-checks" source="Reminders · Erinnerungen" title="Offerte Café Linde schicken" />
           <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: 18, rowGap: 4, alignItems: 'baseline' }}>

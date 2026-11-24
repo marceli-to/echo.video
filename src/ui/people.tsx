@@ -321,7 +321,7 @@ const MeetingPreview: React.FC = () => (
   </>
 );
 
-type Bubble = { text: string; sent?: boolean; media?: boolean; match?: boolean } | { day: string };
+export type Bubble = { text: string; sent?: boolean; media?: boolean; match?: boolean } | { day: string };
 const bubbles: Bubble[] = [
   { text: 'Könnt ihr euch den Entwurf nächste Woche kurz anschauen?' },
   { text: 'Klar, Dienstag 10 Uhr bei euch im Atelier?', sent: true },
@@ -337,10 +337,13 @@ const bubbles: Bubble[] = [
   { text: 'Perfekt, danke!', sent: true, match: true },
 ];
 
-const ChatPreview: React.FC = () => (
+const ChatPreview: React.FC = () => <ChatPreviewView source="WhatsApp · 10 messages" title="Sandra Brunner" bubbles={bubbles} />;
+
+/** A chat in the preview (ChatResultPreview), scrolled so the newest messages show. */
+export const ChatPreviewView: React.FC<{ source: string; title: string; bubbles: Bubble[] }> = ({ source, title, bubbles }) => (
   <>
     <div style={{ padding: '26px 36px 16px' }}>
-      <PreviewHead icon="chat-teardrop" source="WhatsApp · 10 messages" title="Sandra Brunner" />
+      <PreviewHead icon="chat-teardrop" source={source} title={title} />
     </div>
     {/* Scrolled to the match (the last message): the card's bottom shows, older messages run off the top. */}
     <div style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '0 36px 12px' }}>

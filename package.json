@@ -5,7 +5,8 @@
   "scripts": {
     "studio": "remotion studio",
     "render": "remotion render Tour out/echo-tour.mp4 --scale=2 --crf=16 --muted",
-    "still": "remotion still"
+    "still": "remotion still",
+    "render:ask": "remotion render Ask out/echo-ask.mp4 --scale=2 --crf=16 --muted"
   },
   "dependencies": {
     "@remotion/cli": "4.0.409",

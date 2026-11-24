@@ -13,6 +13,7 @@ export const C = {
   accentTint: '#DCDCDC', // Surface + 13 % of graphite
   onAccent: '#FFFFFF',
   dim: 'rgba(20, 26, 23, 0.22)', // ⌘K overlay
+  warning: '#9A4A1F',
 };
 
 export const R = { row: 12, card: 14, button: 8 };
