@@ -65,10 +65,20 @@ export const timeline = (sc: Scenario) => {
   const typeEnd = typeStart + Math.ceil(sc.question.length * charFrames);
   const send = typeEnd + s(0.5);
   const toolsStart = send + s(0.7);
-  const toolAt = (i: number) => toolsStart + s(1.05) * i;
-  const toolDone = (i: number) => toolAt(i) + s(0.6);
+  // Each call runs, its finds appear on the map (one after the other), then a pause to take
+  // it in before the next call.
+  const starts: number[] = [];
   const reveal: Record<string, number> = {};
-  sc.tools.forEach((t, i) => t.reveals.forEach((id, j) => (reveal[id] = toolDone(i) + j * s(0.5))));
+  let t0 = toolsStart;
+  sc.tools.forEach((t, i) => {
+    starts[i] = t0;
+    const done = t0 + s(0.6);
+    t.reveals.forEach((id, j) => (reveal[id] = done + j * s(0.6)));
+    const settled = done + Math.max(0, t.reveals.length - 1) * s(0.6) + s(0.5);
+    t0 = settled + s(1.1);
+  });
+  const toolAt = (i: number) => starts[i];
+  const toolDone = (i: number) => starts[i] + s(0.6);
   const answerStart = toolDone(sc.tools.length - 1) + s(1.4);
   const answerLength = sc.answer.reduce((n, r) => n + runLength(r), 0);
   const answerEnd = answerStart + Math.ceil(answerLength / CHARS_PER_FRAME);
