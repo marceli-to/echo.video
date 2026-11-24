@@ -82,8 +82,9 @@ export const timeline = (sc: Scenario) => {
   };
   const atChars = (n: number) => answerStart + Math.ceil(n / CHARS_PER_FRAME);
   const focus = sc.focus.map((f) => ({ nodes: f.nodes, from: atChars(charsUntil(f.from)), to: atChars(charsUntil(f.to)) }));
-  const cursorMove = [answerEnd + s(1.2), answerEnd + s(2.2)];
-  const click = cursorMove[1] + s(0.15);
+  // Time to read the answer, a calm move to the link, a moment on it, then the click.
+  const cursorMove = [answerEnd + s(2.2), answerEnd + s(3.6)];
+  const click = cursorMove[1] + s(0.7);
   const echoIn = click + s(0.35);
   const echoHold = echoIn + s(4.5);
   const total = echoHold + s(0.8) + s(0.4);
@@ -383,7 +384,7 @@ const TerminalApp: React.FC<{ sc: Scenario; tl: TL; frame: number; active: boole
         ) : null}
       </div>
       <div style={{ padding: '0 18px 18px' }}>
-        <div style={{ border: `1px solid ${TERM.line}`, borderRadius: 8, padding: '10px 14px', display: 'flex', alignItems: 'center', ...tmono(14), whiteSpace: 'pre' }}>
+        <div style={{ border: `1px solid ${TERM.line}`, borderRadius: 8, padding: '10px 14px', display: 'flex', alignItems: 'center', ...tmono(14), color: TERM.ink, whiteSpace: 'pre' }}>
           <span style={{ color: TERM.muted }}>› </span>
           {!sent ? <span>{sc.question.slice(0, typed)}</span> : null}
           <span style={{ width: 8, height: 18, background: caretOn && !working ? TERM.accent : 'transparent', marginLeft: 1 }} />
